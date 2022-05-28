@@ -12,7 +12,6 @@ __all__ = [
     'run_in_thread',
     'run_in_thread_decorator',
     'run_in_threadpool_decorator',
-    'timeout_decorator',
 ]
 
 
@@ -96,22 +95,3 @@ def run_in_threadpool_decorator(func: t.Callable) -> t.Callable:
         run_in_threadpool(func, *args, **kwargs)
 
     return wrapper
-
-
-def timeout_decorator(seconds: int = 10, error_message: t.Optional[t.Text] = None) -> t.Callable:
-    def decorator(func: t.Callable) -> t.Callable:
-        def _handle_timeout(signum, frame):
-            raise TimeoutError(error_message)
-
-        def wrapper(*args, **kwargs):
-            signal.signal(signal.SIGALRM, _handle_timeout)
-            signal.alarm(seconds)
-            try:
-                result = func(*args, **kwargs)
-            finally:
-                signal.alarm(0)
-            return result
-
-        return wrapper
-
-    return decorator
