@@ -138,6 +138,7 @@ class NiceLogger(logging.Logger):
             self,
             name: str,
             fmt: str = _FORMAT,
+            enable_file: bool = True,
             enable_telegram: bool = False,
             telegram_token: str = None,
             telegram_chat_ids: t.List[int] = None,
@@ -148,6 +149,7 @@ class NiceLogger(logging.Logger):
             encoding: str = "utf-8",
             log_folder: str = 'logs'
     ):
+        self.__enable_file = enable_file
         self.__enable_telegram = enable_telegram
         self.__telegram_token = telegram_token
         self.__telegram_chat_ids = telegram_chat_ids
@@ -164,20 +166,22 @@ class NiceLogger(logging.Logger):
         ch.setFormatter(ColoredFormatter(name, fmt, colored))
         self.addHandler(ch)
 
-        self._make_folder(log_folder)
+        if self.__enable_file is True:
+            self._make_folder(log_folder)
 
-        th = TimedRotatingFileHandler(
-            filename=f"logs/{name}-logs",
-            when=when,
-            backupCount=backup_count,
-            encoding=encoding
-        )
-        th.setLevel(logging.DEBUG)
-        th.setFormatter(ColoredFormatter(name, fmt, colored=False))
-        self.addHandler(th)
+            th = TimedRotatingFileHandler(
+                filename=f"logs/{name}-logs",
+                when=when,
+                backupCount=backup_count,
+                encoding=encoding
+            )
+            th.setLevel(logging.DEBUG)
+            th.setFormatter(ColoredFormatter(name, fmt, colored=False))
+            self.addHandler(th)
 
         if self.__enable_telegram:
-            self.addHandler(TelegramHandler(self.__telegram_token, self.__telegram_chat_ids, self.__tele_run_async))
+            tgh = TelegramHandler(self.__telegram_token, self.__telegram_chat_ids, self.__tele_run_async)
+            self.addHandler(tgh)
 
     def __handle_telegram(self):
         if self.__enable_telegram and self.__telegram_token is None:

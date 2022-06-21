@@ -4,7 +4,7 @@ from distutils.core import setup
 setup(
     name='nice_tools',
     packages=['nice_tools'],
-    version='0.0.2',
+    version='0.0.3',
     license='MIT',
     description='A collection of tools for python',
     author='amiwrpremium',

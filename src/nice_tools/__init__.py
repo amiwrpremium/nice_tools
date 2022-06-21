@@ -8,6 +8,5 @@ from . import func_tools
 __all__ = logger_tools.__all__ + thread_tools.__all__
 
 
-__version__ = '0.0.2'
+__version__ = '0.0.3'
 __author__ = 'amiwrpremium'
-
