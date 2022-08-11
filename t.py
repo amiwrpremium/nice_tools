@@ -1,3 +1,3 @@
 from src.nice_tools import NiceLogger
 
-n = NiceLogger(name='test')
+n2 = NiceLogger(name='test2')

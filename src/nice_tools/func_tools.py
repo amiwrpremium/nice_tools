@@ -11,7 +11,7 @@ __all__ = [
 ]
 
 
-def timeout_decorator(seconds: int = 10, error_message: t.Optional[t.Text] = None) -> t.Callable:
+def timeout_decorator(seconds: int = 10, error_message: t.Optional[t.Text] = "Timed Out!") -> t.Callable:
     def decorator(func: t.Callable) -> t.Callable:
         def _handle_timeout(signum, frame):
             raise TimeoutError(error_message)

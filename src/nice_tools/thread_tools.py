@@ -4,7 +4,6 @@ import typing as t
 from concurrent.futures import ThreadPoolExecutor
 from threading import Thread
 from functools import wraps
-import signal
 
 
 __all__ = [
