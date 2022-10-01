@@ -7,6 +7,7 @@ from threading import Thread
 from uuid import uuid4
 
 from telegram import Bot
+from telegram.utils.request import Request
 
 import os
 
@@ -219,14 +220,18 @@ class NiceLogger(logging.Logger):
 
 
 class BotLogger:
-    def __init__(self, name: str, token: str, chat_ids: t.List[int], run_async: bool = True):
+    def __init__(self, name: str, token: str, chat_ids: t.List[int], run_async: bool = True, proxy: str = None):
         self.__name = name
         self.__token = token
         self.__chat_ids = chat_ids
         self.__run_async = run_async
 
         self._MAX_LEN = 4096
-        self.__bot = Bot(token)
+
+        if proxy is not None:
+            self.__bot = Bot(token=self.__token, request=Request(proxy_url=proxy))
+        else:
+            self.__bot = Bot(token=self.__token)
 
         return
 
