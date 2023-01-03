@@ -4,7 +4,7 @@ from distutils.core import setup
 setup(
     name='nice_tools',
     packages=['nice_tools'],
-    version='0.0.5',
+    version='0.0.6',
     license='MIT',
     description='A collection of tools for python',
     author='amiwrpremium',
@@ -12,7 +12,7 @@ setup(
     url='https://github.com/amiwrpremium/nice_tools',
     keywords=['tools', 'threading', 'thread', 'logging', "logger"],
     install_requires=[
-        'python-telegram-bot',
+        'python-telegram-bot==13.11',
         'requests',
         'aiohttp',
     ],
